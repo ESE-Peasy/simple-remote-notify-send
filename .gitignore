@@ -1,0 +1,13 @@
+#CMake files
+CMakeCache.txt
+cmake_install.cmake
+CMakeFiles/*
+Makefile
+
+#Binaries
+NotificationReceiver
+NotificationBroadcast
+
+#Vim
+.swp
+
