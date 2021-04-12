@@ -5,7 +5,7 @@ CMakeFiles/*
 Makefile
 
 #Binaries
-NotificationReceiver
+NotificationLocalReceiver
 NotificationBroadcast
 
 #Vim

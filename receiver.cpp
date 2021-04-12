@@ -21,16 +21,21 @@
 
 namespace Notify {
 
-NotifyReceiver::NotifyReceiver(int port, bool ignore, bool check_env) {
-  if (!ignore) {
-    if (Notify::GetStringFromCommand("pwd | grep -o '[^/]*$'") !=
-        "PosturePerfection\n") {
-      std::cout
-          << "Please run this in the root PosturePerfection Directory and not "
-          << GetStringFromCommand("pwd");
-      throw IncorrectDirectory();
+NotifyReceiver::NotifyReceiver(int port, bool check_env, std::string title,
+                               std::string image) {
+  // Setup notify send command
+  if (check_env == true) {
+    char *env = getenv("XDG_CURRENT_DESKTOP");
+    if (std::strcmp(env, "ubuntu:GNOME") == 0) {
+      this->command = "notify-send -u critical ";
     }
   }
+  this->title = title;
+  this->command =
+      this->command + this->space + this->quote + this->title + this->quote;
+  this->image = image;
+
+  // Setup socket
   this->receive_fd = socket(AF_INET, SOCK_DGRAM, 0);
   if (this->receive_fd == 0) {
     Notify::err_msg(-1, "socket_creation");
@@ -48,12 +53,6 @@ NotifyReceiver::NotifyReceiver(int port, bool ignore, bool check_env) {
   int binding = bind(this->receive_fd, (struct sockaddr *)&(this->address),
                      sizeof(this->address));
   Notify::err_msg(binding, "socket_bind");
-  if (check_env == true) {
-    char *env = getenv("XDG_CURRENT_DESKTOP");
-    if (std::strcmp(env, "ubuntu:GNOME") == 0) {
-      this->command = "notify-send -u critical \"Posture Perfection\" \"";
-    }
-  }
 }
 NotifyReceiver::~NotifyReceiver() {
   shutdown(this->receive_fd, SHUT_RDWR);
@@ -64,21 +63,15 @@ void NotifyReceiver::run() {
   std::cout.flush();
   std::memset(this->buffer, 0, sizeof(this->buffer));
   std::memset(&this->broadcaster_address, 0, sizeof(broadcaster_address));
-
   int read_value =
       recvfrom(this->receive_fd, this->buffer, 1024, MSG_DONTWAIT,
                (struct sockaddr *)&this->broadcaster_address,
                reinterpret_cast<socklen_t *>(&this->broadcaster_len));
   if (read_value > 0) {
-    char current_d[1024];
-    getcwd(current_d, sizeof(current_d));
-    std::string cwd(current_d);
-    std::string middle("\" --icon ");
-    std::string end(
-        "/docs/images/"
-        "posture-logo-no-text.png");
     this->buffer[read_value] = '\0';
-    std::string out = this->command + this->buffer + middle + cwd + end;
+    std::string out = this->command + this->space + this->quote + this->buffer +
+                      this->quote + this->space + this->middle + this->space +
+                      this->image;
     system(out.c_str());
   }
 }

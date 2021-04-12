@@ -29,13 +29,6 @@
 
 namespace Notify {
 /**
- * @brief Exception for when user tries to run `Notify::NotifyReceiver` in wrong
- * directory
- */
-struct IncorrectDirectory : public std::exception {
-  const char *what() const throw() { return "Not in Correct Directory"; }
-};
-/**
  * @brief A `Notify::NotifyReceiver` for listening and receiving notifications
  * from `Notify::NotifyBroadcast`
  *
@@ -48,9 +41,13 @@ class NotifyReceiver {
   int addr_len = sizeof(address);  ///<  Length of address structure
   int broadcaster_len = sizeof(
       broadcaster_address);  ///<  Length of broadcaster address structure
-  std::string command =
-      "notify-send -t 0 \"Posture Perfection\" \"";  ///< Notify-send command
-                                                     ///< and flags
+  std::string command = "notify-send -t 0";  ///< Notify-send command
+                                             ///< and flags
+  std::string title;                         ///< Title of Notify Send message
+  std::string image;                         ///< Absolute path of image
+  std::string middle = "--icon";
+  char quote = '"';
+  char space = ' ';
 
  public:
   char buffer[1024];  ///< Returned result from broadcasted message
@@ -63,8 +60,9 @@ class NotifyReceiver {
    * @param check_env If `true` will check current desktop environment and
    * change notify-send command if needed
    */
-  explicit NotifyReceiver(int port = 121121, bool ignore = false,
-                          bool check_env = true);
+  explicit NotifyReceiver(int port = 121121, bool check_env = true,
+                          std::string title = "Remote Notify Send Receiver",
+                          std::string image = "");
   ~NotifyReceiver();
 
   /**

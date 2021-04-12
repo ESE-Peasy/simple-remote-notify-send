@@ -19,9 +19,12 @@
  *
  */
 #include "receiver.h"
-
 int main(int argc, char *argv[]) {
-  Notify::NotifyReceiver receiver(121121);
+  char current_d[1024];
+  getcwd(current_d, sizeof(current_d));
+  std::string cwd(current_d);
+  std::string image = cwd + "/PosturePerfection/posture-logo-no-text.png";
+  Notify::NotifyReceiver receiver(121121, true, "Posture Perfection", image);
   while (1) {
     receiver.run();
   }
