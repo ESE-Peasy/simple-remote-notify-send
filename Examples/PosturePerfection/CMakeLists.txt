@@ -3,11 +3,13 @@ cmake_minimum_required(VERSION 3.10)
 project(Posture{erfectionNotification)
 
 # add the executable
-add_executable(PosturePerfectionReceiver PosturePerfection_receiver.cpp)
+add_executable(PosturePerfectionLocalReceiver PosturePerfection_receiver.cpp)
 add_executable(PosturePerfectionTestBroadcast PosturePerfection_test_broadcast.cpp)
+add_executable(PosturePerfectionReceiver PosturePerfection_receiver_deb_version.cpp)
 
-target_link_libraries(PosturePerfectionReceiver RemoteNotifyReceive)
+target_link_libraries(PosturePerfectionLocalReceiver RemoteNotifyReceive)
 target_link_libraries(PosturePerfectionTestBroadcast RemoteNotifyBroadcast)
+target_link_libraries(PosturePerfectionReceiver RemoteNotifyReceive)
 
 set(CMAKE_CXX_STANDARD 11)
 install(TARGETS PosturePerfectionReceiver
