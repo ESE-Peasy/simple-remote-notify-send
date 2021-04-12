@@ -1,7 +1,7 @@
 /**
  * @file RemoteNotifyReceive.h
  * @brief For listening and receiving notifications from
- * `Notify::Broadcast`
+ * `RemoteNotify::Broadcast`
  *
  * @copyright Copyright (C) 2021  Conor Begley
  *
@@ -51,8 +51,8 @@ int err_msg(int num, std::string msg);
 std::string GetStringFromCommand(std::string cmd);
 
 /**
- * @brief A `Notify::NotifyReceive` for listening and receiving notifications
- * from `Notify::NotifyBroadcast`
+ * @brief A `RemoteNotify::Receive` for listening and receiving notifications
+ * from `RemoteNotify::Broadcast`
  *
  */
 class Receive {
@@ -74,7 +74,7 @@ class Receive {
  public:
   char buffer[1024];  ///< Returned result from broadcasted message
   /**
-   * @brief Constructor for `Notify::NotifyReceive`
+   * @brief Constructor for `RemoteNotify::Receive`
    *
    * @param port Port number to listen on (default is 121121)
    * @param ignore Boolean to ignore location where Notify::NotifyReceive is
@@ -82,9 +82,9 @@ class Receive {
    * @param check_env If `true` will check current desktop environment and
    * change notify-send command if needed
    */
-  explicit Receive(int port = 121121, bool check_env = true,
-                   std::string title = "Remote Notify Send Receive",
-                   std::string image = "");
+  Receive(int port = 121121, bool check_env = true,
+          std::string title = "Remote Notify Send Receive",
+          std::string image = "");
   ~Receive();
 
   /**

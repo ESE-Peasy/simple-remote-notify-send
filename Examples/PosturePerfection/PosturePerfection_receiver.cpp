@@ -1,5 +1,5 @@
 /**
- * @file receiver_example.cpp
+ * @file PosturePerfection_receiver.cpp
  * @brief Program for running a notification receiver
  *
  * @copyright Copyright (C) 2021  Conor Begley

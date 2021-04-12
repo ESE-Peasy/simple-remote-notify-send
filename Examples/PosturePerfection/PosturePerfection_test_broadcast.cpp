@@ -1,5 +1,5 @@
 /**
- * @file broadcast_example.cpp
+ * @file PosturePerfection_test_broadcast.cpp
  * @brief Program for running a simple broadcaster example
  *
  *
