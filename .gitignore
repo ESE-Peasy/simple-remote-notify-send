@@ -12,11 +12,11 @@ Examples/PosturePerfection/CMakeFiles/*
 Examples/PosturePerfection/Makefile
 
 #Binaries
-libRemoteNotify.a
 libRemoteNotifyBroadcast.a
 libRemoteNotifyReceive.a
-PosturePerfectionReceiver
-PosturePerfectionTestBroadcast
+Examples/PosturePerfection/PosturePerfectionReceiver
+Examples/PosturePerfection/PosturePerfectionLocalReceiver
+Examples/PosturePerfection/PosturePerfectionTestBroadcast
 #Vim
 .swp
 #VSCODE
