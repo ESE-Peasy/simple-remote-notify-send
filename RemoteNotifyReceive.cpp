@@ -51,8 +51,10 @@ Receive::Receive(int port, bool check_env, std::string title,
   // Setup notify send command
   if (check_env == true) {
     char *env = getenv("XDG_CURRENT_DESKTOP");
-    if (std::strcmp(env, "ubuntu:GNOME") == 0) {
-      this->command = "notify-send -u critical ";
+    if (env != NULL) {
+      if (std::strcmp(env, "ubuntu:GNOME") == 0) {
+        this->command = "notify-send -u critical ";
+      }
     }
   }
   this->title = title;
@@ -78,7 +80,7 @@ Receive::Receive(int port, bool check_env, std::string title,
   int binding = bind(this->receive_fd, (struct sockaddr *)&(this->address),
                      sizeof(this->address));
   err_msg(binding, "socket_bind");
-}
+}  // namespace RemoteNotify
 Receive::~Receive() {
   shutdown(this->receive_fd, SHUT_RDWR);
   close(this->receive_fd);
