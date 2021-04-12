@@ -1,0 +1,23 @@
+#CMake files
+CMakeCache.txt
+cmake_install.cmake
+CMakeFiles/*
+Makefile
+install_manifest.txt
+
+#PosturePerfection
+Examples/PosturePefection/CMakeCache.txt
+Examples/PosturePerfection/cmake_install.cmake
+Examples/PosturePerfection/CMakeFiles/*
+Examples/PosturePerfection/Makefile
+
+#Binaries
+libRemoteNotify.a
+libRemoteNotifyBroadcast.a
+libRemoteNotifyReceive.a
+PosturePerfectionReceiver
+PosturePerfectionTestBroadcast
+#Vim
+.swp
+#VSCODE
+.vscode/
