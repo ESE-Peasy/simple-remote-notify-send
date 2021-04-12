@@ -23,11 +23,33 @@
 #ifndef REMOTENOTIFYRECEIVE_H_
 #define REMOTENOTIFYRECEIVE_H_
 
+#include <arpa/inet.h>
+#include <errno.h>
+#include <netinet/in.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/socket.h>
+#include <unistd.h>
+
+#include <cstring>
+#include <iostream>
 #include <string>
 
-#include "RemoteNotify.h"
-
 namespace RemoteNotify {
+/**
+ * @brief Error handler for socket connections
+ *
+ * @param num The result of socket function
+ * @param msg Message to be printed also default error message
+ */
+int err_msg(int num, std::string msg);
+
+/**
+ * @brief Return result from system command as a string
+ * @param cmd The system command
+ */
+std::string GetStringFromCommand(std::string cmd);
+
 /**
  * @brief A `Notify::NotifyReceive` for listening and receiving notifications
  * from `Notify::NotifyBroadcast`

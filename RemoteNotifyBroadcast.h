@@ -21,9 +21,14 @@
 
 #ifndef REMOTENOTIFYBROADCAST_H_
 #define REMOTENOTIFYBROADCAST_H_
-#include <string>
+#include <arpa/inet.h>
+#include <netinet/in.h>
+#include <stdlib.h>
+#include <sys/socket.h>
+#include <unistd.h>
 
-#include "RemoteNotify.h"
+#include <cstring>
+#include <iostream>
 
 namespace RemoteNotify {
 /**

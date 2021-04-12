@@ -1,0 +1,13 @@
+cmake_minimum_required(VERSION 3.10)
+include(GNUInstallDirs)
+
+project(Posture{erfectionNotification)
+
+# add the executable
+add_executable(PosturePerfectionReceiver PosturePerfection_receiver.cpp)
+add_executable(PosturePerfectionTestBroadcast PosturePerfection_test_broadcast.cpp)
+
+target_link_libraries(PosturePerfectionReceiver RemoteNotifyReceive)
+target_link_libraries(PosturePerfectionTestBroadcast RemoteNotifyBroadcast)
+
+set(CMAKE_CXX_STANDARD 11)

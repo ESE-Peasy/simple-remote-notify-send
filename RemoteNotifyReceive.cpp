@@ -20,6 +20,31 @@
 #include <exception>
 
 namespace RemoteNotify {
+int err_msg(int num, std::string msg) {
+  if (num < 0) {
+    std::cerr << "Error with " << msg << "\n"
+              << "Error Code:" << errno << "\n";
+    exit(1);
+  }
+  return 0;
+}
+
+std::string GetStringFromCommand(std::string cmd) {
+  std::string data;
+  FILE *stream;
+  const int MaxBuffer = 256;
+  char buffer[MaxBuffer];
+  cmd.append(" 2>&1");
+
+  stream = popen(cmd.c_str(), "r");
+
+  if (stream) {
+    while (!feof(stream))
+      if (fgets(buffer, MaxBuffer, stream) != NULL) data.append(buffer);
+    pclose(stream);
+  }
+  return data;
+}
 
 Receive::Receive(int port, bool check_env, std::string title,
                  std::string image) {
@@ -38,7 +63,7 @@ Receive::Receive(int port, bool check_env, std::string title,
   // Setup socket
   this->receive_fd = socket(AF_INET, SOCK_DGRAM, 0);
   if (this->receive_fd == 0) {
-    RemoteNotify::err_msg(-1, "socket_creation");
+    err_msg(-1, "socket_creation");
   }
   this->address.sin_family = AF_INET;
   this->address.sin_addr.s_addr = htons(INADDR_ANY);
@@ -48,11 +73,11 @@ Receive::Receive(int port, bool check_env, std::string title,
       setsockopt(this->receive_fd, SOL_SOCKET,
                  SO_REUSEADDR | SO_REUSEPORT | SO_BROADCAST, &opt, sizeof(opt));
   if (setup) {
-    RemoteNotify::err_msg(-1, "socket_creation");
+    err_msg(-1, "socket_creation");
   }
   int binding = bind(this->receive_fd, (struct sockaddr *)&(this->address),
                      sizeof(this->address));
-  RemoteNotify::err_msg(binding, "socket_bind");
+  err_msg(binding, "socket_bind");
 }
 Receive::~Receive() {
   shutdown(this->receive_fd, SHUT_RDWR);

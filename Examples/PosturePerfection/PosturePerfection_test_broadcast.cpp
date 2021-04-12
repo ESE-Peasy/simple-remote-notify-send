@@ -19,7 +19,7 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
-#include "RemoteNotifyBroadcast.h"
+#include <RemoteNotifyBroadcast.h>
 
 int main(int argc, char *argv[]) {
   RemoteNotify::Broadcast broadcaster = RemoteNotify::Broadcast();

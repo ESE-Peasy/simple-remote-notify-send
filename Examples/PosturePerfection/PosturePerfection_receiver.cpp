@@ -18,12 +18,12 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
-#include "RemoteNotifyReceive.h"
+#include <RemoteNotifyReceive.h>
 int main(int argc, char *argv[]) {
   char current_d[1024];
   getcwd(current_d, sizeof(current_d));
   std::string cwd(current_d);
-  std::string image = cwd + "/PosturePerfection/posture-logo-no-text.png";
+  std::string image = cwd + "/posture-logo-no-text.png";
   RemoteNotify::Receive receiver(121121, true, "Posture Perfection", image);
   while (1) {
     receiver.run();
