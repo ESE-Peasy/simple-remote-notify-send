@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(Posture{erfectionNotification)
+project(PosturePerfectionNotification)
 
 # add the executable
 add_executable(PosturePerfectionLocalReceiver PosturePerfection_receiver.cpp)
