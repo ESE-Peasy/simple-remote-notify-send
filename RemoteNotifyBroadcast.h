@@ -1,6 +1,6 @@
 /**
- * @file broadcaster.h
- * @brief Broadcaster for sending notifications to `Notify::NotifyReceiver`
+ * @file RemoteNotifyBroadcast.h
+ * @brief Broadcast for sending notifications to `RemoteNotify:Receive`
  *
  * @copyright Copyright (C) 2021  Conor Begley
  *
@@ -19,33 +19,33 @@
  *
  */
 
-#ifndef SRC_NOTIFICATIONS_BROADCASTER_H_
-#define SRC_NOTIFICATIONS_BROADCASTER_H_
+#ifndef REMOTENOTIFYBROADCAST_H_
+#define REMOTENOTIFYBROADCAST_H_
 #include <string>
 
-#include "notify.h"
+#include "RemoteNotify.h"
 
-namespace Notify {
+namespace RemoteNotify {
 /**
- * @brief A broadcaster to send messages to `Notify::NotifyReceiver`
+ * @brief A Broadcast to send messages to `RemoteNotify::Receive`
  *
  */
-class NotifyBroadcast {
+class Broadcast {
  private:
-  int broadcast_fd;            ///< Socket which the broadcaster is bound to
+  int broadcast_fd;            ///< Socket which the Broadcast is bound to
   struct sockaddr_in address;  ///< Broadcast address structure
   char* target_ip;             ///< Broadcast IP address
 
  public:
   /**
-   * @brief Constructor for `Notify::NotifyBroadcaster`
+   * @brief Constructor for `RemoteNotify::Broadcast`
    *
    * @param port Port number to listen on (default is 121121)
    * @param ip Broadcast address (default is 255.255.255.255)
    */
-  explicit NotifyBroadcast(int port = 121121,
-                           char* ip = const_cast<char*>("255.255.255.255"));
-  ~NotifyBroadcast();
+  explicit Broadcast(int port = 121121,
+                     char* ip = const_cast<char*>("255.255.255.255"));
+  ~Broadcast();
 
   /**
    * @brief Broadcasts message to ip
@@ -53,5 +53,5 @@ class NotifyBroadcast {
    */
   void sendMessage(std::string msg);
 };
-}  // namespace Notify
-#endif  // SRC_NOTIFICATIONS_BROADCASTER_H_
+}  // namespace RemoteNotify
+#endif  // REMOTENOTIFYBROADCAST_H_

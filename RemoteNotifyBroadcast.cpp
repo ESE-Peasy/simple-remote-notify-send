@@ -15,10 +15,10 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
-#include "broadcaster.h"
+#include "RemoteNotifyBroadcast.h"
 
-namespace Notify {
-NotifyBroadcast::NotifyBroadcast(int port, char *ip) {
+namespace RemoteNotify {
+Broadcast::Broadcast(int port, char *ip) {
   this->target_ip = ip;
   this->broadcast_fd = socket(AF_INET, SOCK_DGRAM, 0);
   this->address.sin_family = AF_INET;
@@ -29,10 +29,10 @@ NotifyBroadcast::NotifyBroadcast(int port, char *ip) {
   int setup = setsockopt(this->broadcast_fd, SOL_SOCKET, SO_BROADCAST, &opt,
                          sizeof(opt));
 }
-NotifyBroadcast::~NotifyBroadcast() { int cls = close(this->broadcast_fd); }
+Broadcast::~Broadcast() { int cls = close(this->broadcast_fd); }
 
-void NotifyBroadcast::sendMessage(std::string msg) {
+void Broadcast::sendMessage(std::string msg) {
   sendto(this->broadcast_fd, msg.c_str(), msg.length(), MSG_DONTWAIT,
          (const struct sockaddr *)&this->address, sizeof(this->address));
 }
-}  // namespace Notify
+}  // namespace RemoteNotify

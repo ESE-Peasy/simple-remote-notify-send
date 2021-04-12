@@ -1,4 +1,7 @@
 /**
+ * @file receiver_example.cpp
+ * @brief Program for running a notification receiver
+ *
  * @copyright Copyright (C) 2021  Conor Begley
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -15,33 +18,15 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
-#include "notify.h"
-
-namespace Notify {
-int err_msg(int num, std::string msg) {
-  if (num < 0) {
-    std::cerr << "Error with " << msg << "\n"
-              << "Error Code:" << errno << "\n";
-    exit(1);
+#include "RemoteNotifyReceive.h"
+int main(int argc, char *argv[]) {
+  char current_d[1024];
+  getcwd(current_d, sizeof(current_d));
+  std::string cwd(current_d);
+  std::string image = cwd + "/PosturePerfection/posture-logo-no-text.png";
+  RemoteNotify::Receive receiver(121121, true, "Posture Perfection", image);
+  while (1) {
+    receiver.run();
   }
-  return 0;
+  return 1;
 }
-
-std::string GetStringFromCommand(std::string cmd) {
-  std::string data;
-  FILE* stream;
-  const int MaxBuffer = 256;
-  char buffer[MaxBuffer];
-  cmd.append(" 2>&1");
-
-  stream = popen(cmd.c_str(), "r");
-
-  if (stream) {
-    while (!feof(stream))
-      if (fgets(buffer, MaxBuffer, stream) != NULL) data.append(buffer);
-    pclose(stream);
-  }
-  return data;
-}
-
-}  // namespace Notify

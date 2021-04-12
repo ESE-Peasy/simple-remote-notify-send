@@ -15,14 +15,14 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
-#include "receiver.h"
+#include "RemoteNotifyReceive.h"
 
 #include <exception>
 
-namespace Notify {
+namespace RemoteNotify {
 
-NotifyReceiver::NotifyReceiver(int port, bool check_env, std::string title,
-                               std::string image) {
+Receive::Receive(int port, bool check_env, std::string title,
+                 std::string image) {
   // Setup notify send command
   if (check_env == true) {
     char *env = getenv("XDG_CURRENT_DESKTOP");
@@ -38,7 +38,7 @@ NotifyReceiver::NotifyReceiver(int port, bool check_env, std::string title,
   // Setup socket
   this->receive_fd = socket(AF_INET, SOCK_DGRAM, 0);
   if (this->receive_fd == 0) {
-    Notify::err_msg(-1, "socket_creation");
+    RemoteNotify::err_msg(-1, "socket_creation");
   }
   this->address.sin_family = AF_INET;
   this->address.sin_addr.s_addr = htons(INADDR_ANY);
@@ -48,25 +48,25 @@ NotifyReceiver::NotifyReceiver(int port, bool check_env, std::string title,
       setsockopt(this->receive_fd, SOL_SOCKET,
                  SO_REUSEADDR | SO_REUSEPORT | SO_BROADCAST, &opt, sizeof(opt));
   if (setup) {
-    Notify::err_msg(-1, "socket_creation");
+    RemoteNotify::err_msg(-1, "socket_creation");
   }
   int binding = bind(this->receive_fd, (struct sockaddr *)&(this->address),
                      sizeof(this->address));
-  Notify::err_msg(binding, "socket_bind");
+  RemoteNotify::err_msg(binding, "socket_bind");
 }
-NotifyReceiver::~NotifyReceiver() {
+Receive::~Receive() {
   shutdown(this->receive_fd, SHUT_RDWR);
   close(this->receive_fd);
 }
 
-void NotifyReceiver::run() {
+void Receive::run() {
   std::cout.flush();
   std::memset(this->buffer, 0, sizeof(this->buffer));
-  std::memset(&this->broadcaster_address, 0, sizeof(broadcaster_address));
+  std::memset(&this->Broadcast_address, 0, sizeof(Broadcast_address));
   int read_value =
       recvfrom(this->receive_fd, this->buffer, 1024, MSG_DONTWAIT,
-               (struct sockaddr *)&this->broadcaster_address,
-               reinterpret_cast<socklen_t *>(&this->broadcaster_len));
+               (struct sockaddr *)&this->Broadcast_address,
+               reinterpret_cast<socklen_t *>(&this->Broadcast_len));
   if (read_value > 0) {
     this->buffer[read_value] = '\0';
     std::string out = this->command + this->space + this->quote + this->buffer +
@@ -75,4 +75,4 @@ void NotifyReceiver::run() {
     system(out.c_str());
   }
 }
-};  // namespace Notify
+};  // namespace RemoteNotify

@@ -19,10 +19,10 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
-#include "broadcaster.h"
+#include "RemoteNotifyBroadcast.h"
 
 int main(int argc, char *argv[]) {
-  Notify::NotifyBroadcast broadcaster = Notify::NotifyBroadcast();
+  RemoteNotify::Broadcast broadcaster = RemoteNotify::Broadcast();
   std::string msg = "Hello World \nSample message";
   broadcaster.sendMessage(msg);
   return 1;

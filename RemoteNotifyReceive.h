@@ -1,7 +1,7 @@
 /**
- * @file receiver.h
- * @brief Receiver for listening and receiving notifications from
- * `Notify::NotifyBroadcast`
+ * @file RemoteNotifyReceive.h
+ * @brief For listening and receiving notifications from
+ * `Notify::Broadcast`
  *
  * @copyright Copyright (C) 2021  Conor Begley
  *
@@ -20,27 +20,27 @@
  *
  */
 
-#ifndef SRC_NOTIFICATIONS_RECEIVER_H_
-#define SRC_NOTIFICATIONS_RECEIVER_H_
+#ifndef REMOTENOTIFYRECEIVE_H_
+#define REMOTENOTIFYRECEIVE_H_
 
 #include <string>
 
-#include "notify.h"
+#include "RemoteNotify.h"
 
-namespace Notify {
+namespace RemoteNotify {
 /**
- * @brief A `Notify::NotifyReceiver` for listening and receiving notifications
+ * @brief A `Notify::NotifyReceive` for listening and receiving notifications
  * from `Notify::NotifyBroadcast`
  *
  */
-class NotifyReceiver {
+class Receive {
  private:
-  int receive_fd;              ///< Receiver socket file descriptor
-  struct sockaddr_in address,  ///<  Receiver address
-      broadcaster_address;  ///<  Specific address details for received messages
+  int receive_fd;              ///< Receive socket file descriptor
+  struct sockaddr_in address,  ///<  Receive address
+      Broadcast_address;  ///<  Specific address details for received messages
   int addr_len = sizeof(address);  ///<  Length of address structure
-  int broadcaster_len = sizeof(
-      broadcaster_address);  ///<  Length of broadcaster address structure
+  int Broadcast_len =
+      sizeof(Broadcast_address);  ///<  Length of Broadcast address structure
   std::string command = "notify-send -t 0";  ///< Notify-send command
                                              ///< and flags
   std::string title;                         ///< Title of Notify Send message
@@ -52,23 +52,23 @@ class NotifyReceiver {
  public:
   char buffer[1024];  ///< Returned result from broadcasted message
   /**
-   * @brief Constructor for `Notify::NotifyReceiver`
+   * @brief Constructor for `Notify::NotifyReceive`
    *
    * @param port Port number to listen on (default is 121121)
-   * @param ignore Boolean to ignore location where Notify::NotifyReceiver is
+   * @param ignore Boolean to ignore location where Notify::NotifyReceive is
    * running
    * @param check_env If `true` will check current desktop environment and
    * change notify-send command if needed
    */
-  explicit NotifyReceiver(int port = 121121, bool check_env = true,
-                          std::string title = "Remote Notify Send Receiver",
-                          std::string image = "");
-  ~NotifyReceiver();
+  explicit Receive(int port = 121121, bool check_env = true,
+                   std::string title = "Remote Notify Send Receive",
+                   std::string image = "");
+  ~Receive();
 
   /**
-   * @brief Sets the `Notify::NotifyReceiver` to start listening
+   * @brief Sets the `Notify::NotifyReceive` to start listening
    */
   void run();
 };
-}  // namespace Notify
-#endif  // SRC_NOTIFICATIONS_RECEIVER_H_
+}  // namespace RemoteNotify
+#endif  // SRC_NOTIFICATIONS_Receive_H_

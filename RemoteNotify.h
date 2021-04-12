@@ -1,6 +1,7 @@
 /**
- * @file notify.h
- * @brief Shared functions between `server.h` and `client.h`. Only runs on Linux
+ * @file RemoteNotify.h
+ * @brief Shared functions between `RemoteNotifyBroadcaster.h` and
+ * `RemoteNotifyReceiver.h`. Only runs on Linux
  *
  * @copyright Copyright (C) 2021  Conor Begley
  *
@@ -19,8 +20,8 @@
  *
  */
 
-#ifndef SRC_NOTIFICATIONS_NOTIFY_H_
-#define SRC_NOTIFICATIONS_NOTIFY_H_
+#ifndef REMOTENOTIFY_H_
+#define REMOTENOTIFY_H_
 
 #include <arpa/inet.h>
 #include <errno.h>
@@ -39,7 +40,7 @@
  * Raspberry Pi to a secondary device.
  *
  */
-namespace Notify {
+namespace RemoteNotify {
 /**
  * @brief Error handler for socket connections
  *
@@ -53,5 +54,5 @@ int err_msg(int num, std::string msg);
  * @param cmd The system command
  */
 std::string GetStringFromCommand(std::string cmd);
-};      // namespace Notify
-#endif  // SRC_NOTIFICATIONS_NOTIFY_H_
+};      // namespace RemoteNotify
+#endif  // REMOTENOTIFY_H_
