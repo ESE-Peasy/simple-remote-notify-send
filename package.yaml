@@ -1,0 +1,24 @@
+meta:
+  description: UDP Receiver for messages from Posture Perfection main program
+  vendor: ESE-Peasy
+  maintainer: ESE-Peasy
+files:
+  "/usr/local/bin/PosturePerfectionReceiver":
+    file: Examples/PosturePerfection/PosturePerfectionReceiver
+    mode: "0755"
+    user: "root"
+  "/usr/local/lib/libRemoteNotifyReceive.a":
+    file: libRemoteNotifyReceive.a
+    mode: "0755"
+    user: "root"
+    keep: true
+  "/usr/local/include/RemoteNotifyReceive.h":
+    file: RemoteNotifyReceive.h
+    mode: "0755"
+    user: "root"
+    keep: true
+  "/usr/local/share/PosturePerfection/posture-logo-no-text.png":
+    file: Examples/PosturePerfection/posture-logo-no-text.png
+    mode: "0755"
+    user: "root"
+    keep: true
