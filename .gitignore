@@ -17,6 +17,8 @@ libRemoteNotifyReceive.a
 Examples/PosturePerfection/PosturePerfectionReceiver
 Examples/PosturePerfection/PosturePerfectionLocalReceiver
 Examples/PosturePerfection/PosturePerfectionTestBroadcast
+*.deb
+
 #Vim
 .swp
 #VSCODE

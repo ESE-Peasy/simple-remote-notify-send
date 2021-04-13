@@ -1,0 +1,5 @@
+Package: PosturePerfectionReceiver
+Version: 1.0
+Architecture: armhf
+Maintainer: ESE-Peasy
+Description: UDP Receiver for messages from Posture Perfection main program
